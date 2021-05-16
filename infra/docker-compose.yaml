@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  ecs-test-dev:
+    build:
+      context: ../
+      dockerfile: ./infra/Dockerfile
+      target: dev
+    environment:
+      - "NODE_ENV=$NODE_ENV"
+    ports:
+      - "5000:5000"
+    volumes:
+      - ../src:/usr/src/app/src

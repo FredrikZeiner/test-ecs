@@ -1,0 +1,43 @@
+{
+	"name": "test-ecs",
+	"version": "1.0.0",
+	"main": "index.js",
+	"engines": {
+		"node": "14"
+	},
+	"dependencies": {
+		"express": "^4.17.1",
+		"jest": "^26.6.3"
+	},
+	"devDependencies": {
+		"@types/express": "^4.17.11",
+		"@types/jest": "^26.0.23",
+		"@types/node": "^15.3.0"
+	},
+	"scripts": {
+		"test": "jest",
+		"dev": "npm run docker:compose:up",
+		"start": "npm run docker:build:production && npm run docker:run:production",
+		"stop": "npm run docker:stop:production",
+		"docker:build:production": "tsc && docker build --target prod -f infra/Dockerfile -t ecs-test:latest .",
+		"docker:run:production": "docker run -p 5000:5000 ecs-test",
+		"docker:compose:down": "docker compose -f infra/docker-compose.yaml down",
+		"docker:compose:up": "docker compose -f infra/docker-compose.yaml up",
+		"docker:compose:up: build": "docker compose -f infra/docker-compose.yaml up --build",
+		"docker:compose:up:recreate": "docker compose -f infra/docker-compose.yaml up --force-recreate",
+		"docker:rm:images": "docker rmi -f $(docker images -a -q)",
+		"docker:rm:containers": "docker rm -vf $(docker ps -a -q)",
+		"docker:rm:cache": "docker builder prune"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/FredrikZeiner/test-ecs.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/FredrikZeiner/test-ecs/issues"
+	},
+	"homepage": "https://github.com/FredrikZeiner/test-ecs#readme"
+}
